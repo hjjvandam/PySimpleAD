@@ -15,7 +15,7 @@ intrinsic functions with subroutines. For example, if
 ```math
      y = x1*x2+sin(x2*x3)
 ```
-then calculating dy/dt becomes
+then calculating d_y_/d_t_ becomes
 ```fortran
       SUBROUTINE FUN (X1, X2, X3, Y)
       DIMENSION X1(2), X2(2), X3(2), Y(2), Z1(2), Z2(2), Z3(2)

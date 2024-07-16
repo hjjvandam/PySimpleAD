@@ -100,6 +100,12 @@ class PySAD:
             for ii in range(PySAD.numvar):
                 print(f"d{PySAD.names[self.varnum]}/d{PySAD.names[ii]} = {self.values[1][ii]}")
 
+    def set(self,value):
+        '''Set the value for an independent variable'''
+        if self.varnum < 0:
+            raise RuntimeError("the variable is not an independent variable")
+        self.values[0] = value
+
     # Binary operators + - * / **
 
     def __add__(self,x1):
@@ -176,11 +182,11 @@ class PySAD:
         x2 = PySAD()
         if isinstance(x1,PySAD):
             x2.values[0] = self.values[0] ** x1.values[0]
-            x2.values[1] = (x1.values[0] * (self.values[0] ** (x1.values[0]-1)) * self.values[1] +
-                            self.values[0] ** x1.values[0] * x1.values[1])
+            x2.values[1] = ((self.values[0] ** x1.values[0]) * (x1.values[0] / self.values[0]) * self.values[1] +
+                            (self.values[0] ** x1.values[0]) * math.log(self.values[0]) * x1.values[1])
         else:
             x2.values[0] = self.values[0] ** x1
-            x2.values[1] = x1 * (self.values[0] ** (x1-1)) * self.values[1]
+            x2.values[1] = (self.values[0] ** x1) * (x1 / self.values[0]) * self.values[1]
         return x2
 
     # Unary operator -

@@ -25,7 +25,7 @@ class TestAD(unittest.TestCase):
         self.assertEqual(x3.values[0],8.0)
         self.assertEqual(len(x3.values[1]),2)
         self.assertEqual(x3.values[1][0],12.0)
-        self.assertEqual(x3.values[1][1],8.0)
+        self.assertEqual(x3.values[1][1],5.545177444479562)
         sys.modules.pop("pysimplead")
 
     def test_pow_ad_and_constant(self):

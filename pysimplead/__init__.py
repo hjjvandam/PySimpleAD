@@ -63,28 +63,28 @@ class PySAD:
         This is a limitation of Python.
         '''
         self.values = []
-        if maxvar:
+        if not maxvar is None:
             if PySAD.maxvar != 0 and PySAD.maxvar != maxvar:
                 raise RuntimeError(f"the maximum number of independent variables has already been set to {PySAD.maxvar} and cannot be reset to {maxvar}")
             else:
                PySAD.maxvar = maxvar
         curvar = None
         self.varnum = -1 # Independent variables will have variable numbers >= 0
-        if name:
+        if not name is None:
             PySAD.names.append(name)
             curvar = PySAD.numvar
             self.varnum = curvar
             PySAD.numvar += 1
             if PySAD.numvar > PySAD.maxvar:
                 raise RuntimeError(f"the number of independent variables {PySAD.numvar} exceeds the maximum number of independent variables {PySAD.maxvar}")
-            if not value:
+            if value is None:
                 raise RuntimeError(f"a new independent variable must be given a value")
-        if value:
+        if not value is None:
             self.values.append(float(value))
         else:
             self.values.append(float(0))
         array = np.zeros((PySAD.maxvar))
-        if curvar != None:
+        if not curvar is None:
             array[curvar] = 1.0
         self.values.append(array)
 
@@ -247,7 +247,7 @@ class PySAD:
         return x2
 
 @dispatch(PySAD)
-def sin(x):
+def sin(x1):
     '''The sin() function'''
     x2 = PySAD()
     x2.values[0] = math.sin(x1.values[0])
@@ -260,7 +260,7 @@ def sin(x):
     return math.sin(x)
 
 @dispatch(PySAD)
-def cos(x):
+def cos(x1):
     '''The sin() function'''
     x2 = PySAD()
     x2.values[0] =  math.cos(x1.values[0])

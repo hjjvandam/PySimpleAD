@@ -88,6 +88,36 @@ class TestAD(unittest.TestCase):
         self.assertAlmostEqual(a2.values[1][4] , 0.0, delta=1.0e-10)
         sys.modules.pop("pysimplead")
 
+    def test_tan(self):
+        import math
+        from pysimplead import PySAD, tan
+        pi  = math.acos(-1.0)
+        x0  = PySAD(name="p",value=0.0,maxvar=4)
+        x14 = PySAD(name="q",value=pi/4.0)
+        x34 = PySAD(name="r",value=3.0*pi/4.0)
+        x1  = PySAD(name="s",value=pi)
+        y0  = 0.0
+        y14 = pi/4.0
+        y34 = 3.0*pi/4.0
+        y1  = pi
+        a0  = tan(x0)
+        a14 = tan(x14)
+        a34 = tan(x34)
+        a1  = tan(x1)
+        b0  = tan(y0)
+        b14 = tan(y14)
+        b34 = tan(y34)
+        b1  = tan(y1)
+        self.assertAlmostEqual(a0.values[0] ,b0,  delta=1.0e-10)
+        self.assertAlmostEqual(a14.values[0],b14, delta=1.0e-10)
+        self.assertAlmostEqual(a34.values[0],b34, delta=1.0e-10)
+        self.assertAlmostEqual(a1.values[0] ,b1,  delta=1.0e-10)
+        self.assertAlmostEqual(a0.values[1][0] , 1.0, delta=1.0e-10)
+        self.assertAlmostEqual(a14.values[1][1], 2.0, delta=1.0e-10)
+        self.assertAlmostEqual(a34.values[1][2], 2.0, delta=1.0e-10)
+        self.assertAlmostEqual(a1.values[1][3] , 1.0, delta=1.0e-10)
+        sys.modules.pop("pysimplead")
+
 
 if __name__ == '__main__':
     unittest.main()

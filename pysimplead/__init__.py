@@ -261,7 +261,7 @@ def sin(x):
 
 @dispatch(PySAD)
 def cos(x1):
-    '''The sin() function'''
+    '''The cos() function'''
     x2 = PySAD()
     x2.values[0] =  math.cos(x1.values[0])
     x2.values[1] = -math.sin(x1.values[0])*x1.values[1]
@@ -269,5 +269,111 @@ def cos(x1):
 
 @dispatch(float)
 def cos(x):
-    '''The sin() function'''
+    '''The cos() function'''
     return math.cos(x)
+
+@dispatch(PySAD)
+def tan(x1):
+    '''The tan() function'''
+    x2 = PySAD()
+    x2.values[0] = math.tan(x1.values[0])
+    x2.values[1] = x1.values[1]/math.cos(x1.values[0])**2
+    return x2
+
+@dispatch(float)
+def tan(x):
+    '''The tan() function'''
+    return math.tan(x)
+
+@dispatch(PySAD)
+def sinh(x1):
+    '''The sinh() function'''
+    x2 = PySAD()
+    x2.values[0] = math.sinh(x1.values[0])
+    x2.values[1] = x1.values[1]*math.cosh(x1.values[0])
+    return x2
+
+@dispatch(float)
+def sinh(x):
+    '''The sinh() function'''
+    return math.sinh(x)
+
+@dispatch(PySAD)
+def cosh(x1):
+    '''The cosh() function'''
+    x2 = PySAD()
+    x2.values[0] = math.cosh(x1.values[0])
+    x2.values[1] = x1.values[1]*math.sinh(x1.values[0])
+    return x2
+
+@dispatch(float)
+def cosh(x):
+    '''The cosh() function'''
+    return math.cosh(x)
+
+@dispatch(PySAD)
+def tanh(x1):
+    '''The tanh() function'''
+    x2 = PySAD()
+    x2.values[0] = math.tanh(x1.values[0])
+    x2.values[1] = x1.values[1]/math.cosh(x1.values[0])**2
+    return x2
+
+@dispatch(float)
+def tanh(x):
+    '''The tan() function'''
+    return math.tanh(x)
+
+@dispatch(PySAD)
+def asin(x1):
+    '''The asin() function'''
+    x2 = PySAD()
+    x2.values[0] = math.asin(x1.values[0])
+    x2.values[1] = x1.values[1]/math.sqrt(1.0-x1.values[0]**2)
+    return x2
+
+@dispatch(float)
+def asin(x):
+    '''The asin() function'''
+    return math.asin(x)
+
+@dispatch(PySAD)
+def acos(x1):
+    '''The acos() function'''
+    x2 = PySAD()
+    x2.values[0] =  math.acos(x1.values[0])
+    x2.values[1] = -x1.values[1]/math.sqrt(1.0-x1.values[0]**2)
+    return x2
+
+@dispatch(float)
+def acos(x):
+    '''The acos() function'''
+    return math.acos(x)
+
+@dispatch(PySAD)
+def atan(x1):
+    '''The atan() function'''
+    x2 = PySAD()
+    x2.values[0] = math.atan(x1.values[0])
+    x2.values[1] = x1.values[1]/(1.0+x1.values[0]**2)
+    return x2
+
+@dispatch(float)
+def atan(x):
+    '''The atan() function'''
+    return math.atan(x)
+
+@dispatch(PySAD)
+def asinh(x1):
+    '''The asinh() function'''
+    x2 = PySAD()
+    t1 = 1.0 + x1.values[0]**2
+    t12 = math.sqrt(t1)
+    x2.values[0] = math.log(x1.values[0]+t12)
+    x2.values[1] = x1.values[1]/t12
+    return x2
+
+@dispatch(float)
+def asinh(x):
+    '''The asinh() function'''
+    return math.asinh(x)

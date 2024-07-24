@@ -66,7 +66,7 @@ Some basic terminology to help with the discussion:
 - inactive independent variables - independent variables that are not included in the differentiation
 
 For example if I want to calculate the radius in 2D space I can write that as
-```
+```Python
    a = 2
    r(x,y) = (x^a + b^a)**(1.0/a)
 ```
@@ -101,7 +101,19 @@ can requires additional memory.
 Note that Python is dynamically typed and so normally it cannot distinguish between
 different implementations of a function like, for example `sin(x)`, based on the type
 of `x`. For automatic differentiation that is a problem that is handled with the
-multiple dispatch module.
+multiple dispatch module. That way we can write code like:
+```Python
+   x = 2.0
+   y = sin(x)
+```
+to evaluate an expression using straightforward Python and then differentiate it 
+simply by changing the type of `x` 
+```Python
+   x = PySAD(value=2.0,name='x',maxvar=1)
+   y = sin(x)
+```
+The multiple dispatch module ensures the correct implementation of `sin` is called in both
+places.
 
 ## Further reading
 

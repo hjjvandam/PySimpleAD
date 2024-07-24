@@ -89,8 +89,8 @@ differentiation approach. For simplicity it also only implements first order der
 While keeping track of active independent variables the following holds with respect to the
 efficiency of forward and backware differentation approaches [^3]:
 
-- Forward differentiation is more efficient for functions `f : R<sub>n<\sub> → R<sub>m<\sub>` with `n ≪ m`
-- Backward differentation is more efficient for functions `f : R<sub>n<\sub> → R<sub>m<\sub>` with `n ≫ m`
+- Forward differentiation is more efficient for functions f : R<sub>n<\sub> → R<sub>m<\sub> with n ≪ m
+- Backward differentation is more efficient for functions f : R<sub>n<\sub> → R<sub>m<\sub> with n ≫ m
 
 In other words the approach that keeps the number of active independent variables smallest
 for longest is the one that is going to give the best performance. The only complicating 

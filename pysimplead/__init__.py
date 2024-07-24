@@ -70,6 +70,7 @@ class PySAD:
                PySAD.maxvar = maxvar
         curvar = None
         self.varnum = -1 # Independent variables will have variable numbers >= 0
+                         # When varnum remains < 0 were are dealing with dependent variables
         if not name is None:
             PySAD.names.append(name)
             curvar = PySAD.numvar
@@ -105,6 +106,23 @@ class PySAD:
         if self.varnum < 0:
             raise RuntimeError("the variable is not an independent variable")
         self.values[0] = value
+
+    def get_val(self):
+        '''Get the value of this instance'''
+        return self.values[0]
+
+    def get_grad(self,independent):
+        '''Get the derivative component corresponding to the given independent variable
+
+        independent - the independent variable the derivative with respect to we want
+                      to extract. I.e. if independent == x then this function returns
+                      d self/d x.
+        '''
+        if not isinstance(independent,PySAD):
+            raise RuntimeError(f"independent is not an instance of PySAD but of {type(independent)}")
+        if independent.varnum < 0:
+            raise RuntimeError(f"independent is not an independent variable")
+        return self.values[1][independent.varnum]
 
     # Binary operators + - * / **
 
@@ -245,6 +263,45 @@ class PySAD:
             x2.values[0] =  self.values[0]
             x2.values[1] =  self.values[1]
         return x2
+
+@dispatch(PySAD)
+def sqrt(x1):
+    '''The sqrt() function'''
+    x2 = PySAD()
+    x2.values[0] = math.sqrt(x1.values[0])
+    x2.values[1] = 0.5/math.sqrt(x1.values[0])*x1.values[1]
+    return x2
+
+@dispatch(float)
+def sqrt(x):
+    '''The sqrt() function'''
+    return math.sqrt(x)
+
+@dispatch(PySAD)
+def exp(x1):
+    '''The exp() function'''
+    x2 = PySAD()
+    x2.values[0] = math.exp(x1.values[0])
+    x2.values[1] = math.exp(x1.values[0])*x1.values[1]
+    return x2
+
+@dispatch(float)
+def exp(x):
+    '''The exp() function'''
+    return math.exp(x)
+
+@dispatch(PySAD)
+def log(x1):
+    '''The log() function'''
+    x2 = PySAD()
+    x2.values[0] = math.log(x1.values[0])
+    x2.values[1] = x1.values[1]/x1.values[0]
+    return x2
+
+@dispatch(float)
+def log(x):
+    '''The log() function'''
+    return math.log(x)
 
 @dispatch(PySAD)
 def sin(x1):

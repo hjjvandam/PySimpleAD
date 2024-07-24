@@ -44,7 +44,10 @@ def minimize(func,a,b):
     dfda = f.get_grad(a)
     dfdb = f.get_grad(b)
     maxd = max(abs(dfda),abs(dfdb))
+    ii = 0
     while maxd > 1.0e-5:
+        ii += 1
+        print(f"iteration, gradient = {ii}, {maxd}")
         x = x - dfda/4.0
         y = y - dfdb/4.0
         f = func(x,y)

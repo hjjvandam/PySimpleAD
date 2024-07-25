@@ -43,16 +43,18 @@ def minimize(func,a,b):
     f = func(x,y)
     dfda = f.get_grad(a)
     dfdb = f.get_grad(b)
+    fab  = f.get_val()
     maxd = max(abs(dfda),abs(dfdb))
     ii = 0
     while maxd > 1.0e-5:
         ii += 1
-        print(f"iteration, gradient = {ii}, {maxd}")
+        print(f"iteration, function, gradient = {ii}, {fab}, {maxd}")
         x = x - dfda/4.0
         y = y - dfdb/4.0
         f = func(x,y)
         dfda = f.get_grad(a)
         dfdb = f.get_grad(b)
+        fab  = f.get_val()
         maxd = max(abs(dfda),abs(dfdb))
     print(f"the minimum of f is at {x.get_val()},{y.get_val()}")
     print("the function value is:")

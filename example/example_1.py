@@ -15,11 +15,6 @@
 import numpy as np
 import sys
 
-def func_f(a,b):
-    '''A simple function that we want to minimize'''
-    f = a*a + b*b
-    return f
-
 def pick_start(a,b):
     '''Pick random starting values
 
@@ -34,6 +29,11 @@ def pick_start(a,b):
     v = rng.random()*(high-low)+low
     b.set(v)
     return (a,b)
+
+def func_f(a,b):
+    '''A simple function that we want to minimize'''
+    f = a*a + b*b
+    return f
 
 def minimize(func,a,b):
     '''Minimize function "func"'''
@@ -62,10 +62,21 @@ def minimize(func,a,b):
 
 def run():
     '''Run a calculation'''
-    from pysimplead import PySAD
+    from pysimplead import PySAD, output
     x1 = PySAD(name="x",value=0.0,maxvar=2)
     x2 = PySAD(name="y",value=0.0)
     x1,x2 = pick_start(x1,x2)
+    f1 = x1.get_val()
+    f2 = x2.get_val()
+   
+    f_fp = func_f(f1,f2)
+    f_ad = func_f(x1,x2)
+
+    print("=== Starting point as floating point, PySAD ===\n")
+    output(f_fp)
+    output(f_ad)
+    print("\n=== Start minimization                      ===\n")
+    
     minimize(func_f,x1,x2)
     sys.modules.pop("pysimplead")
 

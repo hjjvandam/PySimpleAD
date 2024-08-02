@@ -434,3 +434,11 @@ def asinh(x1):
 def asinh(x):
     '''The asinh() function'''
     return math.asinh(x)
+
+@dispatch(PySAD)
+def output(x1):
+    x1.print()
+
+@dispatch(float)
+def output(x):
+    print(x)

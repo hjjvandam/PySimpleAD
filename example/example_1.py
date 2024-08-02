@@ -73,7 +73,9 @@ def run():
     f_ad = func_f(x1,x2)
 
     print("=== Starting point as floating point, PySAD ===\n")
+    print(type(f_fp))
     output(f_fp)
+    print("\n\n"+str(type(f_ad)))
     output(f_ad)
     print("\n=== Start minimization                      ===\n")
     
